@@ -1,7 +1,4 @@
-package demo.employee;
-
-import demo.IdIterable;
-import demo.InstanceRepository;
+package demo;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

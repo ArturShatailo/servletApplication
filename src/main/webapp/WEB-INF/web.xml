@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+    <servlet-name>servlet</servlet-name>
+    <servlet-class>demo.PutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>servlet</servlet-name>
+    <url-pattern>/jsp/servlet</url-pattern>
+  </servlet-mapping>
 </web-app>
+
+

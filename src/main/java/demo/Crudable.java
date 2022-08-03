@@ -1,14 +1,12 @@
 package demo;
 
-import demo.employee.Employee;
-
 import java.util.List;
 
 public interface Crudable<T> {
 
-    int save(Employee employee);
+    int save(T T);
 
-    int update(Employee employee);
+    int update(T T);
 
     int delete(int id);
 

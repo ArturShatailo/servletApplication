@@ -1,6 +1,4 @@
-package demo.employee;
-
-import demo.InstanceRepository;
+package demo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
