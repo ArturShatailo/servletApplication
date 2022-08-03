@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/putServlet")
-public class PutServlet extends HttpServlet implements InstanceRepository, IdIterable{
+public class PutServlet extends HttpServlet implements InstanceRepository{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,10 +21,9 @@ public class PutServlet extends HttpServlet implements InstanceRepository, IdIte
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String country = request.getParameter("country");
-        int id = getID(request);
 
         //create new requested object
-        Employee employee = new Employee(id, name, email, country);
+        Employee employee = new Employee(name, email, country);
 
         int status = employeeRepository.save(employee);
 

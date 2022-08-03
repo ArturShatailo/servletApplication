@@ -15,13 +15,20 @@ public class ViewByIDServlet extends HttpServlet implements InstanceRepository, 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        //get id according to the request
-        int id = getID(request);
-
         //get employee object according to received id
-        Employee employee = employeeRepository.getById(id);
+        try{
+            //get id according to the request
+            int id = getID(request);
+            Employee employee = employeeRepository.getById(id);
+            if (employee == null){
+                throw new NullPointerException();
+            }
+            out.print(employee);
+        } catch (NullPointerException npe){
+            out.print("Sorry, can't find this object in data base");
+        } finally {
+            out.close();
+        }
 
-        out.print(employee);
-        out.close();
     }
 }

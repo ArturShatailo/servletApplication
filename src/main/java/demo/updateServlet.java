@@ -23,23 +23,28 @@ public class updateServlet extends HttpServlet implements InstanceRepository, Id
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String country = request.getParameter("country");
-        int id = getID(request);
+        try{
+            int id = getID(request);
 
-        //get new requested object by id
-        Employee employee = employeeRepository.getById(id);
+            //get new requested object by id
+            Employee employee = employeeRepository.getById(id);
 
-        //set values for employee object
-        employee.setName(name);
-        employee.setEmail(email);
-        employee.setCountry(country);
+            //set values for employee object
+            employee.setName(name);
+            employee.setEmail(email);
+            employee.setCountry(country);
 
-        int status = employeeRepository.update(employee);
+            int status = employeeRepository.update(employee);
 
-        if (status > 0) {
-            out.print("Record saved successfully!");
-        } else {
-            out.println("Sorry! unable to save record");
+            if (status > 0) {
+                out.print("Record saved successfully!");
+            } else {
+                out.println("Sorry! unable to save record");
+            }
+        } catch (NullPointerException npe) {
+            out.print("Unable to save record");
+        } finally {
+            out.close();
         }
-        out.close();
     }
 }

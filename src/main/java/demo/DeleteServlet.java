@@ -16,18 +16,26 @@ public class DeleteServlet extends HttpServlet implements InstanceRepository, Id
         PrintWriter out = response.getWriter();
 
         //get id of the employee has to be deleted
-        int id = getID(request);
+        int id = 0;
 
-        //Call delete method of EmployeeRepository class object.
-        //Method is implemented from Crudable.
-        int status = employeeRepository.delete(id);
+        try{
+            id = getID(request);
+            //Call delete method of EmployeeRepository class object.
+            //Method is implemented from Crudable.
+            int status = employeeRepository.delete(id);
 
-        if (status > 0) {
-            out.print("Record removed successfully!");
-            response.sendRedirect("viewServlet");
-        } else {
-            out.println("Sorry! unable to remove record");
+            if (status > 0) {
+                out.print("Record removed successfully!");
+                response.sendRedirect("viewServlet");
+            } else {
+                out.println("Sorry! unable to remove record");
+            }
+
+        } catch (NullPointerException npe){
+            out.println("Unable to remove record");
+        } finally {
+            out.close();
         }
-        out.close();
+
     }
 }
