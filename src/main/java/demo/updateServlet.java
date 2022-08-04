@@ -11,6 +11,18 @@ import java.io.PrintWriter;
 @WebServlet("/updateServlet")
 public class updateServlet extends HttpServlet implements InstanceRepository, IdIterable {
 
+    /**
+     * In try-catch-finally structure, calls getID method and using getByID method of employeeRepository object
+     * finds Employee object needed to be updated. In case of no NumberFormatException during getID method
+     * sets new values from request to found Employee object. In case of exception or status > 0, prints error message.
+     *
+     * @param request HttpServletRequest request received by servlet
+     * @param response HttpServletResponse response sent by servlet
+     * @throws ServletException Exception in case of servlet error, ErrorHandler servlet should be called
+     * but is not created
+     * @throws IOException can be thrown in case of PrintWriter failure.
+     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -19,11 +31,14 @@ public class updateServlet extends HttpServlet implements InstanceRepository, Id
 
         PrintWriter out = response.getWriter();
 
-        //get string values that can be requested in request object.
+        //Gets string values that is requested in request object.
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String country = request.getParameter("country");
+
         try{
+
+            //calls method that returns "id" value from 'request' HttpServletRequest object
             int id = getID(request);
 
             //get new requested object by id
@@ -34,6 +49,7 @@ public class updateServlet extends HttpServlet implements InstanceRepository, Id
             employee.setEmail(email);
             employee.setCountry(country);
 
+            //calls method update of EmployeeRepository class and sends 'employee' object as a parameter.
             int status = employeeRepository.update(employee);
 
             if (status > 0) {
@@ -41,7 +57,7 @@ public class updateServlet extends HttpServlet implements InstanceRepository, Id
             } else {
                 out.println("Sorry! unable to save record");
             }
-        } catch (NullPointerException npe) {
+        } catch (NumberFormatException npe) {
             out.print("Unable to save record");
         } finally {
             out.close();
